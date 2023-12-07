@@ -12,6 +12,7 @@ class IMManager {
   late MessageManager messageManager;
   late GroupManager groupManager;
   late UserManager userManager;
+  late SignalingManager signalingManager;
 
   late OnConnectListener _connectListener;
   OnListenerForService? _listenerForService;
@@ -27,6 +28,7 @@ class IMManager {
     messageManager = MessageManager(_channel);
     groupManager = GroupManager(_channel);
     userManager = UserManager(_channel);
+    signalingManager = SignalingManager(_channel);
     _addNativeCallback(_channel);
   }
 
@@ -326,6 +328,52 @@ class IMManager {
               int partSize = data['partSize'];
               String partHash = data['partHash'];
               _uploadFileListener?.uploadPartComplete(id, index, partSize, partHash);
+              break;
+          }
+        }else if (call.method == ListenerType.signalingListener) {
+          String type = call.arguments['type'];
+          var value = call.arguments['data'];
+
+          switch (type) {
+            case 'onReceiveNewInvitation':
+              final msg = Utils.toObj(value, (map) => SignalingTips.fromJson(map));
+              signalingManager.listener.receiveNewInvitation(msg);
+              break;
+            case 'onInviteeAccepted':
+              final msg = Utils.toObj(value, (map) => SignalingTips.fromJson(map));
+              signalingManager.listener.inviteeAccepted(msg);
+              break;
+            case 'onInviteeAcceptedByOtherDevice':
+              final msg = Utils.toObj(value, (map) => SignalingInfo.fromJson(map));
+              signalingManager.listener.inviteeAcceptedByOtherDevice(msg);
+              break;
+            case 'onInviteeRejected':
+              final msg = Utils.toObj(value, (map) => SignalingTips.fromJson(map));
+              signalingManager.listener.inviteeRejected(msg);
+              break;
+            case 'onInviteeRejectedByOtherDevice':
+              final msg = Utils.toObj(value, (map) => SignalingInfo.fromJson(map));
+              signalingManager.listener.inviteeRejectedByOtherDevice(msg);
+              break;
+            case 'onInvitationCancelled':
+              final msg = Utils.toObj(value, (map) => SignalingTips.fromJson(map));
+              signalingManager.listener.invitationCancelled(msg);
+              break;
+            case 'onInvitationTimeout':
+              final msg = Utils.toObj(value, (map) => SignalingInfo.fromJson(map));
+              signalingManager.listener.invitationTimeout(msg);
+              break;
+            case 'onHangUp':
+              final msg = Utils.toObj(value, (map) => SignalingInfo.fromJson(map));
+              signalingManager.listener.hangUp(msg);
+              break;
+            case 'onRoomParticipantConnected':
+              final msg = Utils.toObj(value, (map) => RoomCallingInfo.fromJson(map));
+              signalingManager.listener.roomParticipantConnected(msg);
+              break;
+            case 'onRoomParticipantDisconnected':
+              final msg = Utils.toObj(value, (map) => RoomCallingInfo.fromJson(map));
+              signalingManager.listener.roomParticipantDisconnected(msg);
               break;
           }
         }

@@ -24,6 +24,7 @@ import io.openim.flutter_openim_sdk.manager.GroupManager;
 import io.openim.flutter_openim_sdk.manager.IMManager;
 import io.openim.flutter_openim_sdk.manager.MessageManager;
 import io.openim.flutter_openim_sdk.manager.UserManager;
+import io.openim.flutter_openim_sdk.manager.SignalingManager;
 
 
 /**
@@ -47,6 +48,7 @@ public class FlutterOpenimSdkPlugin implements FlutterPlugin, MethodCallHandler,
     private ConnectivityListener connectivityListener;
     private VisibilityListener visibilityListener;
     public static boolean isInitialized;
+    private static SignalingManager signalingManager;
 
     public FlutterOpenimSdkPlugin() {
         FlutterOpenimSdkPlugin.imManager = new IMManager();
@@ -55,6 +57,7 @@ public class FlutterOpenimSdkPlugin implements FlutterPlugin, MethodCallHandler,
         FlutterOpenimSdkPlugin.messageManager = new MessageManager();
         FlutterOpenimSdkPlugin.conversationManager = new ConversationManager();
         FlutterOpenimSdkPlugin.groupManager = new GroupManager();
+        FlutterOpenimSdkPlugin.signalingManager = new SignalingManager();
     }
 
 
