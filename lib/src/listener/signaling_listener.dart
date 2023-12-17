@@ -2,12 +2,12 @@ import 'package:flutter_openim_sdk/flutter_openim_sdk.dart';
 
 /// 消息监听
 class OnSignalingListener {
-  Function(SignalingTips msg)? onReceiveNewInvitation;
-  Function(SignalingTips msg)? onInviteeAccepted;
+  Function(InvitationInfo msg)? onReceiveNewInvitation;
+  Function(InvitationInfo msg)? onInviteeAccepted;
   Function(SignalingInfo msg)? onInviteeAcceptedByOtherDevice;
-  Function(SignalingTips msg)? onInviteeRejected;
+  Function(InvitationInfo msg)? onInviteeRejected;
   Function(SignalingInfo msg)? onInviteeRejectedByOtherDevice;
-  Function(SignalingTips msg)? onInvitationCancelled;
+  Function(InvitationInfo msg)? onInvitationCancelled;
   Function(SignalingInfo msg)? onInvitationTimeout;
   Function(SignalingInfo msg)? onHangUp;
   Function(RoomCallingInfo msg)? onRoomParticipantConnected;
@@ -29,11 +29,11 @@ class OnSignalingListener {
     this.onRoomParticipantDisconnected,
   }) : id = "id_${DateTime.now().microsecondsSinceEpoch}";
 
-  void receiveNewInvitation(SignalingTips msg) {
+  void receiveNewInvitation(InvitationInfo msg) {
     onReceiveNewInvitation?.call(msg);
   }
 
-  void inviteeAccepted(SignalingTips msg) {
+  void inviteeAccepted(InvitationInfo msg) {
     onInviteeAccepted?.call(msg);
   }
 
@@ -41,7 +41,7 @@ class OnSignalingListener {
     onInviteeAcceptedByOtherDevice?.call(msg);
   }
 
-  void inviteeRejected(SignalingTips msg) {
+  void inviteeRejected(InvitationInfo msg) {
     onInviteeRejected?.call(msg);
   }
 
@@ -49,7 +49,7 @@ class OnSignalingListener {
     onInviteeRejectedByOtherDevice?.call(msg);
   }
 
-  void invitationCancelled(SignalingTips msg) {
+  void invitationCancelled(InvitationInfo msg) {
     onInvitationCancelled?.call(msg);
   }
 

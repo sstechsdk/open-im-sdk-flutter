@@ -31,16 +31,28 @@ class ConversationManager {
     int offset = 0,
     int count = 20,
     String? operationID,
-  }) =>
-      _channel
-          .invokeMethod(
-              'getConversationListSplit',
-              _buildParam({
-                'offset': offset,
-                'count': count,
-                "operationID": Utils.checkOperationID(operationID),
-              }))
-          .then((value) => Utils.toList(value, (map) => ConversationInfo.fromJson(map)));
+  }) async {
+    final result = await _channel
+        .invokeMethod(
+        'getConversationListSplit',
+        _buildParam({
+          'offset': offset,
+          'count': count,
+          "operationID": Utils.checkOperationID(operationID),
+        }));
+
+    List<dynamic> jsonResponse = Utils.toList(result, (map) => map);
+    List<ConversationInfo> filteredConversations = [];
+
+    for (var item in jsonResponse) {
+      if (item['userID'].length == 10) {
+        filteredConversations.add(ConversationInfo.fromJson(item));
+      }
+    }
+
+    return filteredConversations;
+  }
+          // .then((value) => Utils.toList(value, (map) => ConversationInfo.fromJson(map)));
 
   /// Query a Conversation; if it doesn't exist, it will be created
   /// [sourceID] UserID for one-on-one conversation, GroupID for group conversation

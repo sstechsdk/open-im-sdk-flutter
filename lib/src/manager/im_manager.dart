@@ -336,11 +336,11 @@ class IMManager {
 
           switch (type) {
             case 'onReceiveNewInvitation':
-              final msg = Utils.toObj(value, (map) => SignalingTips.fromJson(map));
+              final msg = Utils.toObj(value, (map) => InvitationInfo.fromJson(map));
               signalingManager.listener.receiveNewInvitation(msg);
               break;
             case 'onInviteeAccepted':
-              final msg = Utils.toObj(value, (map) => SignalingTips.fromJson(map));
+              final msg = Utils.toObj(value, (map) => InvitationInfo.fromJson(map));
               signalingManager.listener.inviteeAccepted(msg);
               break;
             case 'onInviteeAcceptedByOtherDevice':
@@ -348,7 +348,7 @@ class IMManager {
               signalingManager.listener.inviteeAcceptedByOtherDevice(msg);
               break;
             case 'onInviteeRejected':
-              final msg = Utils.toObj(value, (map) => SignalingTips.fromJson(map));
+              final msg = Utils.toObj(value, (map) => InvitationInfo.fromJson(map));
               signalingManager.listener.inviteeRejected(msg);
               break;
             case 'onInviteeRejectedByOtherDevice':
@@ -356,7 +356,7 @@ class IMManager {
               signalingManager.listener.inviteeRejectedByOtherDevice(msg);
               break;
             case 'onInvitationCancelled':
-              final msg = Utils.toObj(value, (map) => SignalingTips.fromJson(map));
+              final msg = Utils.toObj(value, (map) => InvitationInfo.fromJson(map));
               signalingManager.listener.invitationCancelled(msg);
               break;
             case 'onInvitationTimeout':
